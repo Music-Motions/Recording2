@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/keyCtop"
-        android:layout_width="89.0625dp"
+        android:layout_width="91.1613dp"
         android:layout_height="177dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -19,7 +19,7 @@
 
     <Button
         android:id="@+id/keyDflat"
-        android:layout_width="59.375dp"
+        android:layout_width="60.7742dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/black"
@@ -28,7 +28,7 @@
 
     <Button
         android:id="@+id/keyDtop"
-        android:layout_width="59.375dp"
+        android:layout_width="60.7742dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="#FF6B20"
@@ -37,7 +37,7 @@
 
     <Button
         android:id="@+id/keyEflat"
-        android:layout_width="59.375dp"
+        android:layout_width="60.7742dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/black"
@@ -46,7 +46,7 @@
 
     <Button
         android:id="@+id/keyEtop"
-        android:layout_width="89.0625dp"
+        android:layout_width="91.1613dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="#FFFC31"
@@ -56,7 +56,7 @@
 
     <Button
         android:id="@+id/keyFtop"
-        android:layout_width="89.0625dp"
+        android:layout_width="91.1613dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="#3EC300"
@@ -65,7 +65,7 @@
 
     <Button
         android:id="@+id/keyGflat"
-        android:layout_width="59.375dp"
+        android:layout_width="60.7742dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/black"
@@ -75,7 +75,7 @@
 
     <Button
         android:id="@+id/keyGtop"
-        android:layout_width="59.375dp"
+        android:layout_width="60.7742dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="#02A9EA"
@@ -84,7 +84,7 @@
 
     <Button
         android:id="@+id/keyAflat"
-        android:layout_width="59.375dp"
+        android:layout_width="60.7742dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/black"
@@ -94,7 +94,7 @@
 
     <Button
         android:id="@+id/keyAtop"
-        android:layout_width="59.375dp"
+        android:layout_width="60.7742dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="#5C6492"
@@ -104,7 +104,7 @@
 
     <Button
         android:id="@+id/keyBflat"
-        android:layout_width="59.375dp"
+        android:layout_width="60.7742dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/black"
@@ -114,7 +114,7 @@
 
     <Button
         android:id="@+id/keyBtop"
-        android:layout_width="89.0625dp"
+        android:layout_width="91.1613dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
 
@@ -125,24 +125,16 @@
 
     <Button
         android:id="@+id/keyC5top"
-        android:layout_width="89.0625dp"
+        android:layout_width="91.1613dp"
         android:layout_height="177dp"
         android:layout_marginTop="8dp"
         android:background="#FF1D15"
         app:layout_constraintStart_toEndOf="@+id/keyBtop"
         app:layout_constraintTop_toTopOf="parent" />
-    <Button
-        android:id="@+id/keyD5flat"
-        android:layout_width="29.6875dp"
-        android:layout_height="177dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/black"
 
-        app:layout_constraintStart_toEndOf="@+id/keyC5top"
-        app:layout_constraintTop_toTopOf="parent" />
     <Button
         android:id="@+id/keyCbottom"
-        android:layout_width="118.75dp"
+        android:layout_width="121.548dp"
         android:layout_height="118dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -152,7 +144,7 @@
 
     <Button
         android:id="@+id/keyDbottom"
-        android:layout_width="118.75dp"
+        android:layout_width="121.548dp"
         android:layout_height="118dp"
         android:background="#FF6B20"
         app:layout_constraintStart_toEndOf="@+id/keyCbottom"
@@ -160,7 +152,7 @@
 
     <Button
         android:id="@+id/keyEbottom"
-        android:layout_width="118.75dp"
+        android:layout_width="121.548dp"
         android:layout_height="118dp"
         android:background="#FFFC31"
         app:layout_constraintStart_toEndOf="@+id/keyDbottom"
@@ -168,7 +160,7 @@
 
     <Button
         android:id="@+id/keyFbottom"
-        android:layout_width="118.75dp"
+        android:layout_width="121.548dp"
         android:layout_height="118dp"
 
         android:background="#3EC300"
@@ -178,7 +170,7 @@
 
     <Button
         android:id="@+id/keyGbottom"
-        android:layout_width="118.75dp"
+        android:layout_width="121.548dp"
         android:layout_height="118dp"
         android:background="#02A9EA"
         app:layout_constraintStart_toEndOf="@+id/keyFbottom"
@@ -186,7 +178,7 @@
 
     <Button
         android:id="@+id/keyAbottom"
-        android:layout_width="118.75dp"
+        android:layout_width="121.548dp"
         android:layout_height="118dp"
         android:background="#5C6492"
         app:layout_constraintStart_toEndOf="@+id/keyGbottom"
@@ -194,7 +186,7 @@
 
     <Button
         android:id="@+id/keyBbottom"
-        android:layout_width="118.75dp"
+        android:layout_width="121.548dp"
         android:layout_height="118dp"
         android:background="#B438F4"
         app:layout_constraintStart_toEndOf="@+id/keyAbottom"
@@ -202,7 +194,7 @@
 
     <Button
         android:id="@+id/keyC5bottom"
-        android:layout_width="118.75dp"
+        android:layout_width="91.1613dp"
         android:layout_height="118dp"
         android:background="#FF1D15"
         app:layout_constraintStart_toEndOf="@+id/keyBbottom"

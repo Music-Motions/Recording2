@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private Button keyGflat = null;
     private Button keyAflat = null;
     private Button keyBflat = null;
-    private Button keyD5flat = null;
 
 
     private Button keyCbottom = null;
@@ -223,8 +222,6 @@ public class MainActivity extends AppCompatActivity {
         keyC5top = (Button) this.findViewById(R.id.keyC5top);
         keyC5top.setSoundEffectsEnabled(false);
 
-        keyD5flat = (Button) this.findViewById(R.id.keyD5flat);
-        keyD5flat.setSoundEffectsEnabled(false);
 
 
         //bottom parts of the keys initialized
@@ -256,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         keyCtop.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event){
-                mp = MediaPlayer.create(MainActivity.this, R.raw.keya2);
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyc);
                 mp.start();
                 mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
                     @Override
@@ -631,24 +628,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event){
                 mp = MediaPlayer.create(MainActivity.this, R.raw.keyc5);
-                mp.start();
-                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        mp.release();//Releases system resources
-
-                    }
-                });
-                return true;
-
-
-            }
-
-        });
-        keyD5flat.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View v, MotionEvent event){
-                mp = MediaPlayer.create(MainActivity.this, R.raw.keydb5);
                 mp.start();
                 mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
                     @Override
