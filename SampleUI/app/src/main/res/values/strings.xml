@@ -6,7 +6,7 @@
     <string name="button">Button</string>
     <string name="recorder">recorder</string>
     <string name="saver">Saver</string>
-    <string name="exporter">exporter</string>
+    <string name="export">exporter</string>
     <string name="record">record</string>
     <string name="end">record</string>
     <string name="play">record</string>

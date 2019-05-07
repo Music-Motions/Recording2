@@ -2,6 +2,7 @@ package com.example.sampleui;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
@@ -25,21 +27,46 @@ import android.widget.Toast;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.File;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageButton keyC = null;
-    private ImageButton keyD = null;
-    private ImageButton keyE = null;
-    private ImageButton keyF = null;
-    private ImageButton keyG = null;
+    private Button keyCtop = null;
+    private Button keyDtop = null;
+    private Button keyEtop = null;
+    private Button keyFtop = null;
+    private Button keyGtop = null;
+    private Button keyAtop = null;
+    private Button keyBtop = null;
+    private Button keyC5top = null;
 
+    private Button keyDflat = null;
+    private Button keyEflat = null;
+    private Button keyGflat = null;
+    private Button keyAflat = null;
+    private Button keyBflat = null;
+    private Button keyD5flat = null;
+
+
+    private Button keyCbottom = null;
+    private Button keyDbottom = null;
+    private Button keyEbottom = null;
+    private Button keyFbottom = null;
+    private Button keyGbottom = null;
+    private Button keyAbottom = null;
+    private Button keyBbottom = null;
+    private Button keyC5bottom = null;
+
+    private Button exporter;
+    private Button player;
     private Button rec = null;
     private MediaRecorder record;
     private MediaPlayer mp;
     public static final int RECORD_AUDIO = 0;
     private String FILE; //File path
     public static final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 0;
+    private String time;
+
 
     FileOutputStream outputStream;
 
@@ -50,10 +77,81 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-        FILE = Environment.getExternalStorageDirectory() + "/tempRecord.3gpp";
+
+        long timeStamp = System.currentTimeMillis();
+        time = Long.toString(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeStamp);
+
+        int mYear = calendar.get(Calendar.YEAR);
+        int mMonth = 1 + calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int mHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int mMinute = calendar.get(Calendar.MINUTE);
+        int mSecond = calendar.get(Calendar.SECOND);
+
+        String year = Integer.toString(mYear);
+        String month = Integer.toString(mMonth);
+        String day = Integer.toString(mDay);
+        String hour = Integer.toString(mHour);
+        String min = Integer.toString(mMinute);
+        String sec = Integer.toString(mSecond);
+        String timestamp = month +"_" + day  + "_" + hour + "-" + min;
+
+        FILE = Environment.getExternalStorageDirectory() + "/Music/"  +"/" + timestamp +".3gpp";
+
         Log.d("Suhani", "The place is " + Environment.getExternalStorageDirectory().getAbsolutePath());
         buttonSound();
 
+        exporter = (Button)findViewById(R.id.exporter);//Exporter
+        exporter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri selectedUri = Uri.parse(Environment.getExternalStorageDirectory() + "/Music/");
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(selectedUri, "resource/folder");
+
+                if (intent.resolveActivityInfo(getPackageManager(), 0) != null)
+                {
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Oops! No file explorer found!", Toast.LENGTH_SHORT).show();
+                    // if you reach this place, it means there is no any file
+                    // explorer app installed on your device
+                }}
+
+        });
+
+        player = (Button)findViewById(R.id.player);
+        player.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (player.getText().toString().equals("Play")) {//Playback
+                    Log.d("Suhani", "3 Before try catch");
+                    try {
+                        Log.d("Suhani", "4 Start Playback Method");
+                        startPlayback();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.d("Suhani", e.getMessage());
+
+                    }
+                    Log.d("Suhani", "5 End in method");
+                    player.setText("Stop");
+                    player.setBackgroundResource(R.drawable.stopsign);
+
+                }
+                else {//Stop Playback
+                    stopPlayback();
+                    player.setText("Play");
+                    Log.d("Suhani", "6 Stop Playback Method");
+
+                }
+            }
+        });
 
         rec = (Button)findViewById(R.id.rec);//rec button
         rec.setOnClickListener(new View.OnClickListener() {
@@ -70,31 +168,11 @@ public class MainActivity extends AppCompatActivity {
                     rec.setText("End");
 
                 }
-                else if (rec.getText().toString().equals("End")) { //Stop Recording
+                else{//Stop Recording
                     Log.d("Suhani", "2 Stop Record Method");
                     stopRecord();
-                    rec.setText("Play");
-
-                }
-                else if (rec.getText().toString().equals("Play")) {//Playback
-                    Log.d("Suhani", "3 Before try catch");
-                    try {
-                        Log.d("Suhani", "4 Start Playback Method");
-                        startPlayback();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.d("Suhani", e.getMessage());
-
-                    }
-                    Log.d("Suhani", "5 End in method");
-                    rec.setText("Stop");
-
-                }
-                else {//Stop Playback
-                    stopPlayback();
-                    Log.d("Suhani", "6 Stop Playback Method");
                     rec.setText("Record");
+
                 }
 
             }
@@ -106,28 +184,79 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonSound(){//assigns sounds for all buttons
 
-        keyC = (ImageButton) this.findViewById(R.id.keyC);
-        keyC.setSoundEffectsEnabled(false);
+        keyCtop = (Button) this.findViewById(R.id.keyCtop);
+        keyCtop.setSoundEffectsEnabled(false);
 
-        keyD = (ImageButton) this.findViewById(R.id.keyD);
-        keyD.setSoundEffectsEnabled(false);
+        keyDflat = (Button) this.findViewById(R.id.keyDflat);
+        keyDflat.setSoundEffectsEnabled(false);
 
-        keyE = (ImageButton) this.findViewById(R.id.keyE);
-        keyE.setSoundEffectsEnabled(false);
+        keyDtop = (Button) this.findViewById(R.id.keyDtop);
+        keyDtop.setSoundEffectsEnabled(false);
 
-        keyF = (ImageButton) this.findViewById(R.id.keyF);
-        keyF.setSoundEffectsEnabled(false);
+        keyEflat = (Button) this.findViewById(R.id.keyEflat);
+        keyEflat.setSoundEffectsEnabled(false);
 
-        keyG = (ImageButton) this.findViewById(R.id.keyG);
-        keyG.setSoundEffectsEnabled(false);
+        keyEtop = (Button) this.findViewById(R.id.keyEtop);
+        keyEtop.setSoundEffectsEnabled(false);
+
+        keyFtop = (Button) this.findViewById(R.id.keyFtop);
+        keyFtop.setSoundEffectsEnabled(false);
+
+        keyGflat = (Button) this.findViewById(R.id.keyGflat);
+        keyGflat.setSoundEffectsEnabled(false);
+
+        keyGtop = (Button) this.findViewById(R.id.keyGtop);
+        keyGtop.setSoundEffectsEnabled(false);
+
+        keyAflat = (Button) this.findViewById(R.id.keyAflat);
+        keyAflat.setSoundEffectsEnabled(false);
+
+        keyAtop = (Button) this.findViewById(R.id.keyAtop);
+        keyAtop.setSoundEffectsEnabled(false);
+
+        keyBflat = (Button) this.findViewById(R.id.keyBflat);
+        keyBflat.setSoundEffectsEnabled(false);
+
+        keyBtop = (Button) this.findViewById(R.id.keyBtop);
+        keyBtop.setSoundEffectsEnabled(false);
+
+        keyC5top = (Button) this.findViewById(R.id.keyC5top);
+        keyC5top.setSoundEffectsEnabled(false);
+
+        keyD5flat = (Button) this.findViewById(R.id.keyD5flat);
+        keyD5flat.setSoundEffectsEnabled(false);
 
 
+        //bottom parts of the keys initialized
+        keyCbottom = (Button) this.findViewById(R.id.keyCbottom);
+        keyCbottom.setSoundEffectsEnabled(false);
 
+        keyDbottom = (Button) this.findViewById(R.id.keyDbottom);
+        keyDbottom.setSoundEffectsEnabled(false);
 
-        keyC.setOnTouchListener(new View.OnTouchListener(){
+        keyEbottom = (Button) this.findViewById(R.id.keyEbottom);
+        keyEbottom.setSoundEffectsEnabled(false);
+
+        keyFbottom = (Button) this.findViewById(R.id.keyFbottom);
+        keyFbottom.setSoundEffectsEnabled(false);
+
+        keyGbottom = (Button) this.findViewById(R.id.keyGbottom);
+        keyGbottom.setSoundEffectsEnabled(false);
+
+        keyAbottom = (Button) this.findViewById(R.id.keyAbottom);
+        keyAbottom.setSoundEffectsEnabled(false);
+
+        keyBbottom = (Button) this.findViewById(R.id.keyBbottom);
+        keyBbottom.setSoundEffectsEnabled(false);
+
+        keyC5bottom = (Button) this.findViewById(R.id.keyC5bottom);
+        keyC5bottom.setSoundEffectsEnabled(false);
+
+//giving the notes sounds
+        keyCtop.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event){
-                mp = MediaPlayer.create(MainActivity.this, R.raw.pianoc);
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keya2);
                 mp.start();
                 mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
                     @Override
@@ -141,11 +270,33 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
-
-        keyD.setOnTouchListener(new View.OnTouchListener(){
+        keyCbottom.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event){
-                mp = MediaPlayer.create(MainActivity.this, R.raw.pianod);
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyc);
+                if(mp==null){
+                    Log.d("Suhani", "null");
+                }
+                else {
+                    mp.start();
+                    mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            mp.release();//Releases system resources
+
+                        }
+                    });
+                }
+                    return true;
+            }
+
+
+        });
+
+        keyDflat.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keydb);
                 mp.start();
                 mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
                     @Override
@@ -160,10 +311,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        keyE.setOnTouchListener(new View.OnTouchListener(){
+
+        keyDtop.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event){
-                mp = MediaPlayer.create(MainActivity.this, R.raw.pianoe);
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyd);
                 mp.start();
                 mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
                     @Override
@@ -178,10 +330,85 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        keyF.setOnTouchListener(new View.OnTouchListener(){
+        keyDbottom.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event){
-                mp = MediaPlayer.create(MainActivity.this, R.raw.pianof);
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyd);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+
+        keyEflat.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyeb);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+
+        keyEtop.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keye);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyEbottom.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keye);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+
+        keyFtop.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyf);
                 mp.start();
                 mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
                     @Override
@@ -197,10 +424,231 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        keyG.setOnTouchListener(new View.OnTouchListener(){
+        keyFbottom.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event){
-                mp = MediaPlayer.create(MainActivity.this, R.raw.pianog);
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyf);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        Log.d("Suhani", "Player: MediaPlayer released");
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+
+        keyGflat.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keygb);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+
+        keyGtop.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyg);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+
+
+         keyGbottom.setOnTouchListener(new View.OnTouchListener(){
+        @Override
+        public boolean onTouch(View v, MotionEvent event){
+            mp = MediaPlayer.create(MainActivity.this, R.raw.keyg);
+            mp.start();
+            mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();//Releases system resources
+
+                }
+            });
+            return true;
+
+
+        }
+
+    });
+        keyAflat.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyab);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyAtop.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keya);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyAbottom.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keya);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyBflat.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keybb);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyBtop.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyb);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyBbottom.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyb);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyC5top.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyc5);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyC5bottom.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keyc5);
+                mp.start();
+                mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();//Releases system resources
+
+                    }
+                });
+                return true;
+
+
+            }
+
+        });
+        keyD5flat.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                mp = MediaPlayer.create(MainActivity.this, R.raw.keydb5);
                 mp.start();
                 mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
                     @Override
@@ -218,6 +666,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     public void startRecord() throws Exception{//Throws exceptions
         if (record!=null) {
