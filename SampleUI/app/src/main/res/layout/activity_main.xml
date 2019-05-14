@@ -32,8 +32,8 @@
                 android:layout_weight="1"
                 android:background="?attr/dividerVertical"
                 android:contentDescription="@string/pianokey"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/keyboardc" />
+                android:scaleType="fitXY"/>
+                <!--app:srcCompat="@drawable/keyboardc" />-->
 
             <ImageButton
                 android:id="@+id/keyD"
@@ -42,8 +42,8 @@
                 android:layout_weight="1"
                 android:background="?attr/dividerVertical"
                 android:contentDescription="@string/pianokey"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/keyboardd" />
+                android:scaleType="fitXY"/>
+                <!--app:srcCompat="@drawable/keyboardd" />-->
 
             <ImageButton
                 android:id="@+id/keyE"
@@ -52,8 +52,8 @@
                 android:layout_weight="1"
                 android:background="?attr/dividerVertical"
                 android:contentDescription="@string/pianokey"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/keyboarde" />
+                android:scaleType="fitXY"/>
+                <!--app:srcCompat="@drawable/keyboarde" />-->
 
             <ImageButton
                 android:id="@+id/keyF"
@@ -62,8 +62,8 @@
                 android:layout_weight="1"
                 android:background="?attr/dividerVertical"
                 android:contentDescription="@string/pianokey"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/keyboardf" />
+                android:scaleType="fitXY"/>
+                <!--app:srcCompat="@drawable/keyboardf" />-->
 
             <ImageButton
                 android:id="@+id/keyG"
@@ -72,8 +72,8 @@
                 android:layout_weight="1"
                 android:background="?attr/dividerVertical"
                 android:contentDescription="@string/pianokey"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/keyboardg" />
+                android:scaleType="fitXY"/>
+                <!--app:srcCompat="@drawable/keyboardg" />-->
 
         </LinearLayout>
 

@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Environment;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 
+        final Drawable myDrawable = getResources().getDrawable(R.drawable.recordbutton);
         long timeStamp = System.currentTimeMillis();
         time = Long.toString(System.currentTimeMillis());
         Calendar calendar = Calendar.getInstance();
@@ -127,10 +130,12 @@ public class MainActivity extends AppCompatActivity {
         player.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (player.getText().toString().equals("Play")) {//Playback
+
+                if (mp==null) {//Playback
                     Log.d("Suhani", "3 Before try catch");
                     try {
                         Log.d("Suhani", "4 Start Playback Method");
+
                         startPlayback();
 
                     } catch (Exception e) {
@@ -138,15 +143,14 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("Suhani", e.getMessage());
 
                     }
-                    Log.d("Suhani", "5 End in method");
-                    player.setText("Stop");
-                    player.setBackgroundResource(R.drawable.stopsign);
+
 
                 }
+
                 else {//Stop Playback
                     stopPlayback();
-                    player.setText("Play");
                     Log.d("Suhani", "6 Stop Playback Method");
+                    player.setBackgroundResource(R.drawable.playbutton);
 
                 }
             }
@@ -156,22 +160,22 @@ public class MainActivity extends AppCompatActivity {
         rec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rec.getText().toString().equals("Record")) {
+                if(record==null){
+                    Log.d("Suhani", "In if statement");
                     try {
                         Log.d("Suhani", "1 Start Record Method");
                         startRecord();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    rec.setText("End");
+                    rec.setBackgroundResource(R.drawable.stopsign);
+//                    rec.setText("End");
 
                 }
                 else{//Stop Recording
                     Log.d("Suhani", "2 Stop Record Method");
                     stopRecord();
-                    rec.setText("Record");
-
+                    rec.setBackgroundResource(R.drawable.recordbutton);
                 }
 
             }
@@ -683,18 +687,22 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Suhani", "2b Record is reset");
         Log.d("Suhani", "2c Record is released");
         record.release();
-
         record = null;
+        mp=null;
     }
     public void startPlayback() {
 
         mp = new MediaPlayer();
         Log.d("Suhani", "4d Before try catch");
         try {
+            player.setBackgroundResource(R.drawable.stopsign);
             Log.d("Suhani", "4e MediaPlayer setting data source");
             mp.setDataSource(FILE);
+            Log.d("Suhani", "4e MediaPlayer prepare");
             mp.prepare();
+            Log.d("Suhani", "4e MediaPlayer start");
             mp.start();
+
         } catch (IOException e) {
             Log.d("Suhani", "4f In the catch exception  " + e.getMessage());
             e.printStackTrace();
@@ -703,7 +711,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Suhani", "4h After try catch to prepare");
 
         Log.d("Suhani", "4l MediaPlayer is starting");
+        mp.setOnCompletionListener(new OnCompletionListener() {//When sound ends
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                stopPlayback();
+            }
 
+        });
 
     }
     public void stopPlayback() {
@@ -711,6 +725,7 @@ public class MainActivity extends AppCompatActivity {
         mp.release();//Releases system resources
         mp = null;
         Log.d("Suhani", "6c MediaPlayer is released");
+        player.setBackgroundResource(R.drawable.playbutton);
 
 
     }

@@ -4,7 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:text="Button" />
 
     <Button
         android:id="@+id/keyCtop"
@@ -203,47 +212,65 @@
 
     <Button
         android:id="@+id/rec"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="322dp"
-        android:layout_height="139.5dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginLeft="89dp"
         android:layout_marginTop="8dp"
+
+        android:background="@drawable/recordbutton"
+
         android:scaleType="fitCenter"
         android:textSize="45dp"
-        android:text="Record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/keyFbottom" />
+    <!--<Button-->
+        <!--android:id="@+id/rec"-->
+        <!--style="@style/Widget.AppCompat.Button.Colored"-->
+        <!--android:layout_width="322dp"-->
+        <!--android:layout_height="139.5dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:textSize="45dp"-->
+        <!--android:text="Record"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/keyFbottom" />-->
 
     <Button
         android:id="@+id/player"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="322dp"
-        android:layout_height="139.5dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginLeft="89dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/playbutton"
         android:textSize="45dp"
-        android:text="play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/rec"
         app:layout_constraintTop_toBottomOf="@+id/keyGbottom" />
+        <!--android:text="play"-->
+
 
     <Button
         android:id="@+id/exporter"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="322dp"
-        android:layout_height="139.5dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginLeft="89dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/sharebutton"
         android:textSize="45dp"
-        android:text="export"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/player"
         app:layout_constraintTop_toBottomOf="@+id/keyBbottom" />
+        <!--android:text="export"-->
+
 
 
 
